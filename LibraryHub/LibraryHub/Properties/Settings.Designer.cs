@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LibraryHub.Properties
+namespace Libraryhub.Properties
 {
 
 

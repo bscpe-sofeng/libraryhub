@@ -13,6 +13,37 @@ namespace Libraryhub
 {
     public partial class Form3 : Form
     {
+        private void GetRecords()
+        {
+
+            try
+
+            {
+                Database.Open();
+                MySqlDataAdapter sda = new MySqlDataAdapter(" select * from log", Database.connection);
+                DataTable dbdataset = new DataTable();
+                sda.Fill(dbdataset);
+                dataGridView6.DataSource = dbdataset;
+                sda.Update(dbdataset);
+                Database.Close();
+
+                foreach (DataGridViewRow dtgvr in dataGridView6.Rows)
+                {
+                    if (dtgvr.Cells["timeout"].Value.ToString().ToLower().Equals("pending"))
+                    {
+                        dtgvr.DefaultCellStyle.BackColor = Color.Crimson;
+                    }
+                    else
+                    {
+                        dtgvr.DefaultCellStyle.BackColor = Color.Green;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         public Form3()
         {
             InitializeComponent();
@@ -21,7 +52,8 @@ namespace Libraryhub
 
         private void Form3_Load(object sender, EventArgs e)
         {
-
+            GetRecords();
+      
             Database.Open();
             try
             {
@@ -37,21 +69,7 @@ namespace Libraryhub
             {
                 MessageBox.Show(ex.Message);
             }
-            Database.Open();
-            try
-            {
-                MySqlDataAdapter sda = new MySqlDataAdapter(" select * from log", Database.connection);
-                DataTable dbdataset = new DataTable();
-                sda.Fill(dbdataset);
-                dataGridView6.DataSource = dbdataset;
-                sda.Update(dbdataset);
-                Database.Close();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+           
         }
         void load_table()
         {
@@ -288,7 +306,7 @@ namespace Libraryhub
         private void timer1_Tick(object sender, EventArgs e)
         {
             DateTime dateTime = DateTime.Now;
-            this.label9.Text = dateTime.ToString("hh:mm:tt yyyy-mm-dd");
+            this.label9.Text = dateTime.ToString("hh:mm:ss tt dd-mm-yyyy");
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -301,7 +319,7 @@ namespace Libraryhub
 
         private void button5_Click(object sender, EventArgs e)
         {
-      
+
             Database.Open();
             MySqlCommand cmd = new MySqlCommand("INSERT INTO log VALUES (NULL, @fname, @lname, @school, @intent, @timein, @timeout)", Database.connection);
             cmd.Parameters.Add(new MySqlParameter("fname", textBox3.Text));
@@ -312,23 +330,8 @@ namespace Libraryhub
             cmd.Parameters.Add(new MySqlParameter("timeout", label10.Text));
             cmd.ExecuteNonQuery();
             Database.Close();
-            button1_Click(sender, e);
 
-            try
-            {
-                Database.Open();
-                MySqlDataAdapter sda = new MySqlDataAdapter(" select * from log", Database.connection);
-                DataTable dbdataset = new DataTable();
-                sda.Fill(dbdataset);
-                dataGridView6.DataSource = dbdataset;
-                sda.Update(dbdataset);
-                Database.Close();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            GetRecords();
         }
 
         private void button1_Click_2(object sender, EventArgs e)
@@ -343,26 +346,7 @@ namespace Libraryhub
                 cmd.Parameters.Add(new MySqlParameter("timeout", label9.Text));
                 cmd.ExecuteNonQuery();
                 Database.Close();
-                button1_Click(sender, e);
-
-                try
-                {
-                    MySqlDataAdapter sda = new MySqlDataAdapter(" select * from log", Database.connection);
-                    DataTable dbdataset = new DataTable();
-                    sda.Fill(dbdataset);
-                    dataGridView6.DataSource = dbdataset;
-                    sda.Update(dbdataset);
-                    Database.Close();
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-            else if (dialogResult == DialogResult.No)
-            {
-                //return
+                GetRecords();
             }
         }
 
@@ -385,5 +369,16 @@ namespace Libraryhub
                 label12.Text = dtgvr.Cells["id"].Value.ToString();
             }
         }
+
+        private void dataGridView6_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+
+        }
+
+        private void dataGridView6_AutoSizeColumnsModeChanged(object sender, DataGridViewAutoSizeColumnsModeEventArgs e)
+        {
+        }
+
+        
     }
 }

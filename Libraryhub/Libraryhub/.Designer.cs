@@ -76,9 +76,9 @@
             this.label1.Image = global::Libraryhub.Properties.Resources.asdasdsad;
             this.label1.Location = new System.Drawing.Point(88, 250);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 13);
+            this.label1.Size = new System.Drawing.Size(72, 13);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Login in as Guest";
+            this.label1.Text = "Quick Search";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             this.label1.MouseEnter += new System.EventHandler(this.label1_MouseEnter);
             this.label1.MouseLeave += new System.EventHandler(this.label1_MouseLeave);

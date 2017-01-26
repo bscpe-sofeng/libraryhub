@@ -231,7 +231,8 @@
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(1156, 535);
-            this.tabControl2.TabIndex = 1;
+            this.tabControl2.TabIndex = 0;
+            this.tabControl2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tabControl2_MouseClick);
             // 
             // tabPage9
             // 
@@ -383,7 +384,7 @@
             this.textBox13.Location = new System.Drawing.Point(866, 123);
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(100, 20);
-            this.textBox13.TabIndex = 28;
+            this.textBox13.TabIndex = 1;
             this.textBox13.Text = "Last Name";
             // 
             // button1
@@ -391,7 +392,7 @@
             this.button1.Location = new System.Drawing.Point(1037, 334);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 27;
+            this.button1.TabIndex = 5;
             this.button1.Text = "Time out";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_2);
@@ -410,7 +411,7 @@
             this.button5.Location = new System.Drawing.Point(866, 334);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 25;
+            this.button5.TabIndex = 4;
             this.button5.Text = "Time In";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
@@ -430,7 +431,7 @@
             this.textBox12.Location = new System.Drawing.Point(866, 219);
             this.textBox12.Name = "textBox12";
             this.textBox12.Size = new System.Drawing.Size(100, 20);
-            this.textBox12.TabIndex = 23;
+            this.textBox12.TabIndex = 3;
             this.textBox12.Text = "Intent";
             // 
             // textBox11
@@ -438,7 +439,7 @@
             this.textBox11.Location = new System.Drawing.Point(866, 169);
             this.textBox11.Name = "textBox11";
             this.textBox11.Size = new System.Drawing.Size(100, 20);
-            this.textBox11.TabIndex = 22;
+            this.textBox11.TabIndex = 2;
             this.textBox11.Text = "School";
             // 
             // textBox3
@@ -446,7 +447,7 @@
             this.textBox3.Location = new System.Drawing.Point(866, 84);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 21;
+            this.textBox3.TabIndex = 0;
             this.textBox3.Text = "Name";
             this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
@@ -462,9 +463,10 @@
             this.dataGridView6.ReadOnly = true;
             this.dataGridView6.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView6.Size = new System.Drawing.Size(782, 455);
-            this.dataGridView6.TabIndex = 20;
+            this.dataGridView6.TabIndex = 6;
             this.dataGridView6.AutoSizeColumnsModeChanged += new System.Windows.Forms.DataGridViewAutoSizeColumnsModeEventHandler(this.dataGridView6_AutoSizeColumnsModeChanged);
             this.dataGridView6.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView6_CellContentClick);
+            this.dataGridView6.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView6_ColumnHeaderMouseClick);
             this.dataGridView6.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView6_DataBindingComplete);
             this.dataGridView6.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView6_RowEnter);
             // 
@@ -831,7 +833,7 @@
             this.tabPage18.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage18.Size = new System.Drawing.Size(1138, 498);
             this.tabPage18.TabIndex = 1;
-            this.tabPage18.Text = "tabPage18";
+            this.tabPage18.Text = "LOG";
             this.tabPage18.UseVisualStyleBackColor = true;
             // 
             // tabPage17
@@ -841,7 +843,7 @@
             this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage17.Size = new System.Drawing.Size(1138, 498);
             this.tabPage17.TabIndex = 0;
-            this.tabPage17.Text = "tabPage17";
+            this.tabPage17.Text = "BORROW AND RETURN";
             this.tabPage17.UseVisualStyleBackColor = true;
             // 
             // timer1

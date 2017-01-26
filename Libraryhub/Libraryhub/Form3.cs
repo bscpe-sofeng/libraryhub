@@ -26,7 +26,7 @@ namespace Libraryhub
                 dataGridView6.DataSource = dbdataset;
                 sda.Update(dbdataset);
                 Database.Close();
-
+                    
                 foreach (DataGridViewRow dtgvr in dataGridView6.Rows)
                 {
                     if (dtgvr.Cells["timeout"].Value.ToString().ToLower().Equals("pending"))
@@ -52,7 +52,7 @@ namespace Libraryhub
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            GetRecords();
+            
       
             Database.Open();
             try
@@ -377,8 +377,19 @@ namespace Libraryhub
 
         private void dataGridView6_AutoSizeColumnsModeChanged(object sender, DataGridViewAutoSizeColumnsModeEventArgs e)
         {
+            GetRecords();
+        }
+
+        private void tabControl2_MouseClick(object sender, MouseEventArgs e)
+        {
+            GetRecords();
         }
 
         
+
+        private void dataGridView6_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            GetRecords();
+        }
     }
 }

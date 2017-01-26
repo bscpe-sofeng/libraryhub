@@ -288,7 +288,7 @@ namespace Libraryhub
         private void timer1_Tick(object sender, EventArgs e)
         {
             DateTime dateTime = DateTime.Now;
-            this.label9.Text = dateTime.ToString();
+            this.label9.Text = dateTime.ToString("hh:mm:tt yyyy-mm-dd");
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -303,11 +303,13 @@ namespace Libraryhub
         {
       
             Database.Open();
-            MySqlCommand cmd = new MySqlCommand("INSERT INTO log VALUES (NULL, @name, @school, @intent, @time)", Database.connection);
-            cmd.Parameters.Add(new MySqlParameter("name", textBox3.Text));
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO log VALUES (NULL, @fname, @lname, @school, @intent, @timein, @timeout)", Database.connection);
+            cmd.Parameters.Add(new MySqlParameter("fname", textBox3.Text));
+            cmd.Parameters.Add(new MySqlParameter("lname", textBox13.Text));
             cmd.Parameters.Add(new MySqlParameter("school", textBox11.Text));
             cmd.Parameters.Add(new MySqlParameter("intent", textBox12.Text));
             cmd.Parameters.Add(new MySqlParameter("timein", label9.Text));
+            cmd.Parameters.Add(new MySqlParameter("timeout", label10.Text));
             cmd.ExecuteNonQuery();
             Database.Close();
             button1_Click(sender, e);
@@ -318,7 +320,7 @@ namespace Libraryhub
                 MySqlDataAdapter sda = new MySqlDataAdapter(" select * from log", Database.connection);
                 DataTable dbdataset = new DataTable();
                 sda.Fill(dbdataset);
-                dataGridView1.DataSource = dbdataset;
+                dataGridView6.DataSource = dbdataset;
                 sda.Update(dbdataset);
                 Database.Close();
 
@@ -326,6 +328,61 @@ namespace Libraryhub
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void button1_Click_2(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("User Timeout?", "Timeout", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Database.Open();
+                MySqlCommand cmd = new MySqlCommand("update log set  fname = @fname , timeout = @timeout where id = @id", Database.connection);
+                cmd.Parameters.Add(new MySqlParameter("id", label12.Text));
+                cmd.Parameters.Add(new MySqlParameter("fname", textBox11.Text));
+                cmd.Parameters.Add(new MySqlParameter("timeout", label9.Text));
+                cmd.ExecuteNonQuery();
+                Database.Close();
+                button1_Click(sender, e);
+
+                try
+                {
+                    MySqlDataAdapter sda = new MySqlDataAdapter(" select * from log", Database.connection);
+                    DataTable dbdataset = new DataTable();
+                    sda.Fill(dbdataset);
+                    dataGridView6.DataSource = dbdataset;
+                    sda.Update(dbdataset);
+                    Database.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //return
+            }
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView6_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
+        private void dataGridView6_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView6.SelectedRows.Count > 0)
+            {
+                DataGridViewRow dtgvr = dataGridView6.SelectedRows[0];
+                label11.Text = dtgvr.Cells["fname"].Value.ToString();
+                label12.Text = dtgvr.Cells["id"].Value.ToString();
             }
         }
     }

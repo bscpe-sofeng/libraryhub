@@ -36,7 +36,7 @@ namespace Libraryhub
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (timeLeft > 1.2)
+            if (timeLeft > .5)
             {
 
                

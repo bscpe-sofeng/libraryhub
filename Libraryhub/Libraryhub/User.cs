@@ -7,10 +7,14 @@ using MySql.Data.MySqlClient;
 
 namespace Libraryhub
 {
+
     public class User
     {
+
         public string username;
         public string password;
+        public string type;
+
 
         public static User login(string username, string password)
         {
@@ -32,6 +36,7 @@ namespace Libraryhub
                 {
                     user.username = reader["user"].ToString(); // array reader index as field table name
                     user.password = reader["pass"].ToString();
+                    user.type = reader["type"].ToString();
 
                 }
                 reader.Close(); // close reader
@@ -45,5 +50,8 @@ namespace Libraryhub
 
             return user; // return user data
         }
+        
     }
 }
+
+

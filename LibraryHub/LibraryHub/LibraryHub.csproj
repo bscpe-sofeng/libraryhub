@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Libraryhub.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -49,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
+    <Compile Include="exists.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +71,12 @@
     </Compile>
     <Compile Include="Form3.Designer.cs">
       <DependentUpon>Form3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form4.Designer.cs">
+      <DependentUpon>Form4.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -117,6 +127,51 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Untitled-11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Untitled-12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\as.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\asd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1485000601_close_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ghsdkjshg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\asdasdsad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\L1011.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Untitled-13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1161620.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\magnifying-glass-book-clipart-500px-question_book_magnify2_svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\363443.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\find-an-accelerated-reader-quiz-number-here-5pPSWK-clipart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\staff_login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\423530550-history-clip-art-history-color.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1370340009859501164address_book_delete-1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

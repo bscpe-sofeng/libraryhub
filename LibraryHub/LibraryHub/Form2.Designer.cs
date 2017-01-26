@@ -41,7 +41,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::Libraryhub.Properties.Resources.load;
-            this.pictureBox2.Location = new System.Drawing.Point(-12, -28);
+            this.pictureBox2.Location = new System.Drawing.Point(-77, -27);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(313, 187);
             this.pictureBox2.TabIndex = 1;
@@ -51,7 +51,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = global::Libraryhub.Properties.Resources.loading_book;
-            this.pictureBox1.Location = new System.Drawing.Point(87, -28);
+            this.pictureBox1.Location = new System.Drawing.Point(22, -27);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(196, 131);
             this.pictureBox1.TabIndex = 0;
@@ -60,7 +60,8 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(118, 90);
+            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label1.Location = new System.Drawing.Point(53, 91);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(73, 13);
             this.label1.TabIndex = 2;
@@ -70,7 +71,8 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(197, 90);
+            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label2.Location = new System.Drawing.Point(132, 91);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 3;
@@ -86,7 +88,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(368, 145);
+            this.ClientSize = new System.Drawing.Size(243, 145);
             this.ControlBox = false;
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);

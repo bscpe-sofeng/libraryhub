@@ -13,6 +13,7 @@ namespace Libraryhub
 {
     public partial class Form1 : Form
     {
+        public static string loginas;
         public Form1()
         {
             InitializeComponent();
@@ -45,12 +46,14 @@ namespace Libraryhub
                     {
                         if (user.type.ToLower() == "admin")
                         {
+                            loginas = textBox1.Text;    
                             Form2 app = new Form2();
                             app.Show();
                             this.Hide();
                         }
                         else
                         {
+                            loginas = textBox1.Text;
                             Form4 app = new Form4();
                             app.Show();
                             this.Hide();

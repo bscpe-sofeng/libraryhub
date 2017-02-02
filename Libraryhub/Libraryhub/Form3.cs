@@ -52,7 +52,7 @@ namespace Libraryhub
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            label13.Text = Environment.UserName;
+            label13.Text = Form1.loginas;
 
             Database.Open();
             try
@@ -145,20 +145,16 @@ namespace Libraryhub
                 textBox1.Text = dtgvr.Cells["fname"].Value.ToString();
                 textBox2.Text = dtgvr.Cells["lname"].Value.ToString();
                 comboBox3.Text = dtgvr.Cells["type"].Value.ToString();
-                textBox4.Text = dtgvr.Cells["user"].Value.ToString();
+                label14.Text = dtgvr.Cells["user"].Value.ToString();
                 textBox5.Text = dtgvr.Cells["pass"].Value.ToString();
             }
 
         }
 
         private void button3_Click(object sender, EventArgs e)
-        {
-
-
-
-
+        { 
             exists user = new exists();
-            if (String.IsNullOrEmpty(textBox8.Text))
+            if (String.IsNullOrEmpty(textBox8.Text) || String.IsNullOrEmpty(textBox6.Text) || String.IsNullOrEmpty(textBox7.Text) || String.IsNullOrEmpty(textBox9.Text) || String.IsNullOrEmpty(comboBox1.Text))
             {
                 MessageBox.Show("please fill all fields !");
             }
@@ -187,7 +183,7 @@ namespace Libraryhub
                     cmd.ExecuteNonQuery();
                     Database.Close();
                     button1_Click(sender, e);
-
+                    MessageBox.Show("Account Added!");
                     try
                     {
                         Database.Open();
@@ -215,39 +211,51 @@ namespace Libraryhub
 
         private void A_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Update this account?", "Update Account", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            string txtfname = textBox1.Text.Trim();
+            string txtlname = textBox2.Text.Trim();
+            string txtpass = textBox5.Text.Trim();
+            string txttype = comboBox3.Text.Trim();
+            
+            if (String.IsNullOrEmpty(txtfname) || String.IsNullOrEmpty(txtlname) || String.IsNullOrEmpty(txtpass) || String.IsNullOrEmpty(txttype))
             {
-                Database.Open();
-                MySqlCommand cmd = new MySqlCommand("update account set fname = @fname, lname = @lname, user = @user, pass = @pass, type = @type where id = @id", Database.connection);
-                cmd.Parameters.Add(new MySqlParameter("id", label2.Text));
-                cmd.Parameters.Add(new MySqlParameter("fname", textBox1.Text));
-                cmd.Parameters.Add(new MySqlParameter("lname", textBox2.Text));
-                cmd.Parameters.Add(new MySqlParameter("user", textBox4.Text));
-                cmd.Parameters.Add(new MySqlParameter("pass", textBox5.Text));
-                cmd.Parameters.Add(new MySqlParameter("type", comboBox3.Text));
-                cmd.ExecuteNonQuery();
-                Database.Close();
-                button1_Click(sender, e);
-
-                try
-                {
-                    MySqlDataAdapter sda = new MySqlDataAdapter(" select * from account", Database.connection);
-                    DataTable dbdataset = new DataTable();
-                    sda.Fill(dbdataset);
-                    dataGridView1.DataSource = dbdataset;
-                    sda.Update(dbdataset);
-                    Database.Close();
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                MessageBox.Show("please fill all fields !");
             }
-            else if (dialogResult == DialogResult.No)
+            else
             {
-                //return
+                DialogResult dialogResult = MessageBox.Show("Update this account?", "Update Account", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Database.Open();
+                    MySqlCommand cmd = new MySqlCommand("update account set fname = @fname, lname = @lname, user = @user, pass = @pass, type = @type where id = @id", Database.connection);
+                    cmd.Parameters.Add(new MySqlParameter("id", label2.Text));
+                    cmd.Parameters.Add(new MySqlParameter("fname", textBox1.Text));
+                    cmd.Parameters.Add(new MySqlParameter("lname", textBox2.Text));
+                    cmd.Parameters.Add(new MySqlParameter("user", label14.Text));
+                    cmd.Parameters.Add(new MySqlParameter("pass", textBox5.Text));
+                    cmd.Parameters.Add(new MySqlParameter("type", comboBox3.Text));
+                    cmd.ExecuteNonQuery();
+                    Database.Close();
+                    button1_Click(sender, e);
+                    MessageBox.Show("Account Updated!");
+                    try
+                    {
+                        MySqlDataAdapter sda = new MySqlDataAdapter(" select * from account", Database.connection);
+                        DataTable dbdataset = new DataTable();
+                        sda.Fill(dbdataset);
+                        dataGridView1.DataSource = dbdataset;
+                        sda.Update(dbdataset);
+                        Database.Close();
+
+                    }
+                    catch (Exception ex)
+                    {   
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    //return
+                }
             }
         }
 
@@ -261,7 +269,7 @@ namespace Libraryhub
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete " + textBox4.Text, "Delete account", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete " + label14.Text, "Delete account", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 Database.Open();
@@ -271,7 +279,7 @@ namespace Libraryhub
                 cmd.ExecuteNonQuery();
                 Database.Close();
                 button1_Click(sender, e);
-
+                MessageBox.Show("Account Deleted!");
                 try
                 {
                     MySqlDataAdapter sda = new MySqlDataAdapter(" select * from account", Database.connection);
@@ -319,23 +327,45 @@ namespace Libraryhub
 
         private void button5_Click(object sender, EventArgs e)
         {
+            string txtFname = textBox3.Text.Trim();
+            string txtLname = textBox11.Text.Trim();
+            string txtSchool = textBox12.Text.Trim();
+            string txtIntent = textBox13.Text.Trim();
 
-            Database.Open();
-            MySqlCommand cmd = new MySqlCommand("INSERT INTO log VALUES (NULL, @fname, @lname, @school, @intent, @timein, @timeout)", Database.connection);
-            cmd.Parameters.Add(new MySqlParameter("fname", textBox3.Text));
-            cmd.Parameters.Add(new MySqlParameter("lname", textBox13.Text));
-            cmd.Parameters.Add(new MySqlParameter("school", textBox11.Text));
-            cmd.Parameters.Add(new MySqlParameter("intent", textBox12.Text));
-            cmd.Parameters.Add(new MySqlParameter("timein", label9.Text));
-            cmd.Parameters.Add(new MySqlParameter("timeout", label10.Text));
-            cmd.ExecuteNonQuery();
-            Database.Close();
+            User user = new User();
+            if (String.IsNullOrEmpty(txtFname) || String.IsNullOrEmpty(txtLname) || String.IsNullOrEmpty(txtSchool) || String.IsNullOrEmpty(txtIntent))
+            {
+                MessageBox.Show("please fill all fields !");
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("Confirm", "Add Entry", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Database.Open();
+                    MySqlCommand cmd = new MySqlCommand("INSERT INTO log VALUES (NULL, @fname, @lname, @school, @intent, @timein, @timeout)", Database.connection);
+                    cmd.Parameters.Add(new MySqlParameter("fname", textBox3.Text));
+                    cmd.Parameters.Add(new MySqlParameter("lname", textBox13.Text));
+                    cmd.Parameters.Add(new MySqlParameter("school", textBox11.Text));
+                    cmd.Parameters.Add(new MySqlParameter("intent", textBox12.Text));
+                    cmd.Parameters.Add(new MySqlParameter("timein", label9.Text));
+                    cmd.Parameters.Add(new MySqlParameter("timeout", label10.Text));
+                    cmd.ExecuteNonQuery();
+                    Database.Close();
 
-            GetRecords();
+                    GetRecords();
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    //do something else
+                }
+
+            }
         }
 
         private void button1_Click_2(object sender, EventArgs e)
         {
+
             DialogResult dialogResult = MessageBox.Show("User Timeout?", "Timeout", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {

@@ -16,11 +16,13 @@ namespace Libraryhub
         public Form2()
         {
             InitializeComponent();
+
+
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            label2.Text = Environment.UserName;
+            label2.Text = Form1.loginas;
             timer1.Start();
         }
 
@@ -50,6 +52,11 @@ namespace Libraryhub
                 timeLeft += 1;
             }
             }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
         }
+    }
        
     }

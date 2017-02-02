@@ -52,8 +52,8 @@ namespace Libraryhub
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            
-      
+            label13.Text = Environment.UserName;
+
             Database.Open();
             try
             {
@@ -390,6 +390,26 @@ namespace Libraryhub
         private void dataGridView6_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             GetRecords();
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Confirm", "Log Out", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Form1 app = new Form1();
+                app.Show();
+                this.Hide();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
         }
     }
 }

@@ -99,6 +99,8 @@
             this.tabPage18 = new System.Windows.Forms.TabPage();
             this.tabPage17 = new System.Windows.Forms.TabPage();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label13 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage9.SuspendLayout();
@@ -227,10 +229,10 @@
             this.tabControl2.Controls.Add(this.tabPage14);
             this.tabControl2.Controls.Add(this.tabPage15);
             this.tabControl2.Controls.Add(this.tabPage16);
-            this.tabControl2.Location = new System.Drawing.Point(-2, 15);
+            this.tabControl2.Location = new System.Drawing.Point(-2, 29);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1156, 535);
+            this.tabControl2.Size = new System.Drawing.Size(1156, 521);
             this.tabControl2.TabIndex = 0;
             this.tabControl2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tabControl2_MouseClick);
             // 
@@ -355,7 +357,7 @@
             this.tabPage10.Location = new System.Drawing.Point(4, 22);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(1148, 509);
+            this.tabPage10.Size = new System.Drawing.Size(1148, 495);
             this.tabPage10.TabIndex = 1;
             this.tabPage10.Text = "LOG";
             this.tabPage10.UseVisualStyleBackColor = true;
@@ -850,11 +852,33 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(1036, 13);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(35, 13);
+            this.label13.TabIndex = 31;
+            this.label13.Text = "Name";
+            this.label13.Click += new System.EventHandler(this.label13_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(1074, 8);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 32;
+            this.button6.Text = "Log Out";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 553);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -890,6 +914,7 @@
             this.tabPage16.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -965,5 +990,7 @@
         private System.Windows.Forms.TabControl tabControl3;
         private System.Windows.Forms.TabPage tabPage18;
         private System.Windows.Forms.TabPage tabPage17;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button button6;
     }
 }

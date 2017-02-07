@@ -69,7 +69,37 @@ namespace Libraryhub
             {
                 MessageBox.Show(ex.Message);
             }
-           
+            Database.Open();
+            try
+            {
+                MySqlDataAdapter sda = new MySqlDataAdapter(" select * from book", Database.connection);
+                DataTable dbdataset = new DataTable();
+                sda.Fill(dbdataset);
+                dataGridView4.DataSource = dbdataset;
+                sda.Update(dbdataset);
+                Database.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            Database.Open();
+            try
+            {
+                MySqlDataAdapter sda = new MySqlDataAdapter(" select * from book", Database.connection);
+                DataTable dbdataset = new DataTable();
+                sda.Fill(dbdataset);
+                dataGridView2.DataSource = dbdataset;
+                sda.Update(dbdataset);
+                Database.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
         void load_table()
         {
@@ -440,6 +470,172 @@ namespace Libraryhub
             {
                 //do something else
             }
+        }
+
+        private void dataGridView4_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView4.SelectedRows.Count > 0)
+            {
+                DataGridViewRow dtgvr = dataGridView4.SelectedRows[0];
+                label22.Text = dtgvr.Cells["bookID"].Value.ToString();
+                textBox16.Text = dtgvr.Cells["title"].Value.ToString();
+                textBox17.Text = dtgvr.Cells["author"].Value.ToString();
+                comboBox5.Text = dtgvr.Cells["category"].Value.ToString();
+                textBox19.Text = dtgvr.Cells["pub"].Value.ToString();
+                label23.Text = dtgvr.Cells["stock"].Value.ToString();
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            exists user = new exists();
+            if (String.IsNullOrEmpty(textBox4.Text) || String.IsNullOrEmpty(textBox14.Text) || String.IsNullOrEmpty(textBox18.Text) || String.IsNullOrEmpty(textBox15.Text) || String.IsNullOrEmpty(comboBox4.Text))
+            {
+                MessageBox.Show("please fill all fields !");
+            }
+            else
+            {
+                Database.Open();
+                MySqlCommand cmd1 = new MySqlCommand("SELECT * FROM book WHERE title = @title", Database.connection);
+                cmd1.Parameters.Add(new MySqlParameter("title", textBox4.Text));
+                MySqlDataReader reader = cmd1.ExecuteReader();
+                if (reader.Read())
+                {
+                    MessageBox.Show("Book Already exist!");
+                }
+
+
+                else
+                {
+                    Database.Close();
+                    Database.Open();
+                    MySqlCommand cmd = new MySqlCommand("INSERT INTO book VALUES (NULL, @title, @author, @category, @pub, @stock)", Database.connection);
+                    cmd.Parameters.Add(new MySqlParameter("title", textBox4.Text));
+                    cmd.Parameters.Add(new MySqlParameter("author", textBox14.Text));
+                    cmd.Parameters.Add(new MySqlParameter("category", comboBox4.Text));
+                    cmd.Parameters.Add(new MySqlParameter("pub", textBox18.Text));
+                    cmd.Parameters.Add(new MySqlParameter("stock", textBox15.Text));
+                    cmd.ExecuteNonQuery();
+                    Database.Close();
+                    button1_Click(sender, e);
+                    MessageBox.Show("Book Added!");
+                    try
+                    {
+                        Database.Open();
+                        MySqlDataAdapter sda = new MySqlDataAdapter(" select * from book", Database.connection);
+                        DataTable dbdataset = new DataTable();
+                        sda.Fill(dbdataset);
+                        dataGridView4.DataSource = dbdataset;
+                        dataGridView2.DataSource = dbdataset;
+                        sda.Update(dbdataset);
+                        Database.Close();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                Database.Close();
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(textBox16.Text) || String.IsNullOrEmpty(textBox17.Text) || String.IsNullOrEmpty(comboBox5.Text) || String.IsNullOrEmpty(textBox19.Text) || String.IsNullOrEmpty(label23.Text))
+            {
+                MessageBox.Show("please fill all fields !");
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("Update this book?", "Update Book", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Database.Open();
+                    MySqlCommand cmd = new MySqlCommand("update book set title = @title, author = @author, category = @category, pub = @pub, stock = @stock where bookID = @bookID", Database.connection);
+                    cmd.Parameters.Add(new MySqlParameter("bookID", label22.Text));
+                    cmd.Parameters.Add(new MySqlParameter("title", textBox16.Text));
+                    cmd.Parameters.Add(new MySqlParameter("author", textBox17.Text));
+                    cmd.Parameters.Add(new MySqlParameter("category", comboBox5.Text));
+                    cmd.Parameters.Add(new MySqlParameter("pub", textBox19.Text));
+                    cmd.Parameters.Add(new MySqlParameter("stock", label23.Text));
+                    cmd.ExecuteNonQuery();
+                    Database.Close();
+                    button1_Click(sender, e);
+                    MessageBox.Show("Book Updated!");
+                    try
+                    {
+                        MySqlDataAdapter sda = new MySqlDataAdapter(" select * from book", Database.connection);
+                        DataTable dbdataset = new DataTable();
+                        sda.Fill(dbdataset);
+                        dataGridView4.DataSource = dbdataset;
+                        dataGridView2.DataSource = dbdataset;
+                        sda.Update(dbdataset);
+                        Database.Close();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    //return
+                }
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Delete " + label22.Text, "Delete book", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Database.Open();
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM book where bookID=@bookID", Database.connection);
+                cmd.Parameters.Add(new MySqlParameter("bookID", label22.Text));
+
+                cmd.ExecuteNonQuery();
+                Database.Close();
+                button1_Click(sender, e);
+                MessageBox.Show("Book Deleted!");
+                try
+                {
+                    MySqlDataAdapter sda = new MySqlDataAdapter(" select * from book", Database.connection);
+                    DataTable dbdataset = new DataTable();
+                    sda.Fill(dbdataset);
+                    dataGridView4.DataSource = dbdataset;
+                    dataGridView2.DataSource = dbdataset;
+                    sda.Update(dbdataset);
+                    Database.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //return
+            }
+        }
+
+        private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void textBox10_TextChanged(object sender, EventArgs e)
+        {
+
+            MySqlDataAdapter sda = new MySqlDataAdapter(" select * from book where title  like'" + textBox10.Text + "%'", Database.connection);
+            DataTable dbdataset = new DataTable();
+            sda.Fill(dbdataset);
+            dataGridView2.DataSource = dbdataset;
+            sda.Update(dbdataset);
+            Database.Close();
+
         }
     }
 }

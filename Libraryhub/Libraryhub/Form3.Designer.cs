@@ -121,6 +121,8 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.label24 = new System.Windows.Forms.Label();
+            this.button10 = new System.Windows.Forms.Button();
             this.tabControl2.SuspendLayout();
             this.tabPage9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
@@ -520,6 +522,8 @@
             // 
             // tabPage11
             // 
+            this.tabPage11.Controls.Add(this.button10);
+            this.tabPage11.Controls.Add(this.label24);
             this.tabPage11.Controls.Add(this.dataGridView2);
             this.tabPage11.Controls.Add(this.label8);
             this.tabPage11.Controls.Add(this.label7);
@@ -548,11 +552,12 @@
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView2.Size = new System.Drawing.Size(873, 398);
             this.dataGridView2.TabIndex = 49;
+            this.dataGridView2.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_RowEnter);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(443, 468);
+            this.label8.Location = new System.Drawing.Point(424, 468);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(41, 13);
             this.label8.TabIndex = 7;
@@ -580,7 +585,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(720, 20);
+            this.label6.Location = new System.Drawing.Point(701, 20);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(60, 13);
             this.label6.TabIndex = 4;
@@ -589,10 +594,15 @@
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(805, 17);
+            this.comboBox2.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3"});
+            this.comboBox2.Location = new System.Drawing.Point(779, 17);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(121, 21);
             this.comboBox2.TabIndex = 3;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // textBox10
             // 
@@ -605,11 +615,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(155, 20);
+            this.label5.Location = new System.Drawing.Point(108, 20);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.Size = new System.Drawing.Size(103, 13);
             this.label5.TabIndex = 1;
-            this.label5.Text = "Search:";
+            this.label5.Text = "Search Title/Author:";
             // 
             // tabPage12
             // 
@@ -969,6 +979,7 @@
             this.label2.Size = new System.Drawing.Size(18, 13);
             this.label2.TabIndex = 26;
             this.label2.Text = "ID";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // textBox2
             // 
@@ -1105,6 +1116,25 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1156, 535);
             this.tabControl1.TabIndex = 0;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(631, 468);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(52, 13);
+            this.label24.TabIndex = 50;
+            this.label24.Text = "Category:";
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(928, 15);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(88, 23);
+            this.button10.TabIndex = 51;
+            this.button10.Text = "Refresh";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // Form3
             // 
@@ -1247,5 +1277,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Button button10;
     }
 }

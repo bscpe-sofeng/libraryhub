@@ -13,6 +13,32 @@ namespace Libraryhub
 {
     public partial class Form3 : Form
     {
+        private void BookStatus()
+        {
+            try
+
+            {
+                Database.Open();
+                MySqlDataAdapter sda = new MySqlDataAdapter(" select * from book", Database.connection);
+                DataTable dbdataset = new DataTable();
+                sda.Fill(dbdataset);
+                dataGridView2.DataSource = dbdataset;
+                sda.Update(dbdataset);
+                Database.Close();
+
+                foreach (DataGridViewRow dtgvr in dataGridView2.Rows)
+                {
+                    if (dtgvr.Cells["stock"].Value.ToString().ToLower().Equals("0"))
+                    {
+                        dtgvr.DefaultCellStyle.BackColor = Color.Crimson;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void GetRecords()
         {
 
@@ -629,12 +655,45 @@ namespace Libraryhub
         private void textBox10_TextChanged(object sender, EventArgs e)
         {
 
-            MySqlDataAdapter sda = new MySqlDataAdapter(" select * from book where title  like'" + textBox10.Text + "%'", Database.connection);
+            MySqlDataAdapter sda = new MySqlDataAdapter(" select * from book where title  like'" + textBox10.Text + "%' AND category like'" + comboBox2.Text + "%' OR author like'" + textBox10.Text + "%' ", Database.connection);
             DataTable dbdataset = new DataTable();
             sda.Fill(dbdataset);
             dataGridView2.DataSource = dbdataset;
             sda.Update(dbdataset);
             Database.Close();
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView2_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView2.SelectedRows.Count > 0)
+            {
+                DataGridViewRow dtgvr = dataGridView2.SelectedRows[0];
+                label7.Text = dtgvr.Cells["title"].Value.ToString();
+                label8.Text = dtgvr.Cells["author"].Value.ToString();
+                label24.Text = dtgvr.Cells["category"].Value.ToString();
+            }
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MySqlDataAdapter sda = new MySqlDataAdapter(" select * from book where category like'" + comboBox2.Text + "%' AND title  like'" + textBox10.Text + "%'", Database.connection);
+            DataTable dbdataset = new DataTable();
+            sda.Fill(dbdataset);
+            dataGridView2.DataSource = dbdataset;
+            sda.Update(dbdataset);
+            Database.Close();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            textBox10.Text = String.Empty;
+            comboBox2.Text = String.Empty;
 
         }
     }

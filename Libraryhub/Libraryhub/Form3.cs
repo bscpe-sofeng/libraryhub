@@ -13,7 +13,7 @@ namespace Libraryhub
 {
     public partial class Form3 : Form
     {
-        private void BookStatus()
+        private void SearchStatus()
         {
             try
 
@@ -39,6 +39,32 @@ namespace Libraryhub
                 MessageBox.Show(ex.Message);
             }
         }
+        private void BookStatus()
+        {
+            try
+
+            {
+                Database.Open();
+                MySqlDataAdapter sda = new MySqlDataAdapter(" select * from book", Database.connection);
+                DataTable dbdataset = new DataTable();
+                sda.Fill(dbdataset);
+                dataGridView4.DataSource = dbdataset;
+                sda.Update(dbdataset);
+                Database.Close();
+
+                foreach (DataGridViewRow dtgvr in dataGridView4.Rows)
+                {
+                    if (dtgvr.Cells["stock"].Value.ToString().ToLower().Equals("0"))
+                    {
+                        dtgvr.DefaultCellStyle.BackColor = Color.Crimson;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void GetRecords()
         {
 
@@ -52,7 +78,7 @@ namespace Libraryhub
                 dataGridView6.DataSource = dbdataset;
                 sda.Update(dbdataset);
                 Database.Close();
-                    
+
                 foreach (DataGridViewRow dtgvr in dataGridView6.Rows)
                 {
                     if (dtgvr.Cells["timeout"].Value.ToString().ToLower().Equals("pending"))
@@ -125,13 +151,23 @@ namespace Libraryhub
             {
                 MessageBox.Show(ex.Message);
             }
+            Database.Open();
+            try
+            {
+                MySqlDataAdapter sda = new MySqlDataAdapter(" select * from borrow", Database.connection);
+                DataTable dbdataset = new DataTable();
+                sda.Fill(dbdataset);
+                dataGridView5.DataSource = dbdataset;
+                sda.Update(dbdataset);
+                Database.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
-        void load_table()
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -208,7 +244,7 @@ namespace Libraryhub
         }
 
         private void button3_Click(object sender, EventArgs e)
-        { 
+        {
             exists user = new exists();
             if (String.IsNullOrEmpty(textBox8.Text) || String.IsNullOrEmpty(textBox6.Text) || String.IsNullOrEmpty(textBox7.Text) || String.IsNullOrEmpty(textBox9.Text) || String.IsNullOrEmpty(comboBox1.Text))
             {
@@ -271,7 +307,7 @@ namespace Libraryhub
             string txtlname = textBox2.Text.Trim();
             string txtpass = textBox5.Text.Trim();
             string txttype = comboBox3.Text.Trim();
-            
+
             if (String.IsNullOrEmpty(txtfname) || String.IsNullOrEmpty(txtlname) || String.IsNullOrEmpty(txtpass) || String.IsNullOrEmpty(txttype))
             {
                 MessageBox.Show("please fill all fields !");
@@ -304,7 +340,7 @@ namespace Libraryhub
 
                     }
                     catch (Exception ex)
-                    {   
+                    {
                         MessageBox.Show(ex.Message);
                     }
                 }
@@ -443,7 +479,7 @@ namespace Libraryhub
 
         private void dataGridView6_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         private void dataGridView6_RowEnter(object sender, DataGridViewCellEventArgs e)
@@ -469,9 +505,10 @@ namespace Libraryhub
         private void tabControl2_MouseClick(object sender, MouseEventArgs e)
         {
             GetRecords();
+            BookStatus();
         }
 
-        
+
 
         private void dataGridView6_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -677,6 +714,8 @@ namespace Libraryhub
                 label7.Text = dtgvr.Cells["title"].Value.ToString();
                 label8.Text = dtgvr.Cells["author"].Value.ToString();
                 label24.Text = dtgvr.Cells["category"].Value.ToString();
+                label25.Text = dtgvr.Cells["stock"].Value.ToString();
+                label26.Text = dtgvr.Cells["bookID"].Value.ToString();
             }
         }
 
@@ -696,5 +735,108 @@ namespace Libraryhub
             comboBox2.Text = String.Empty;
 
         }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Borrow this book?", "Borrow Book", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                int zero = 0;
+                Database.Open();
+                MySqlCommand cmd1 = new MySqlCommand("SELECT * FROM book WHERE bookID = @bookID and stock = @stock", Database.connection);
+                cmd1.Parameters.Add(new MySqlParameter("bookID", label26.Text));
+                cmd1.Parameters.Add(new MySqlParameter("stock", zero));
+                MySqlDataReader reader = cmd1.ExecuteReader();
+                if (reader.Read())
+                {
+                    MessageBox.Show("No stock.");
+                    
+                }
+
+                Database.Close();
+                Database.Open();
+                MySqlCommand cmd2 = new MySqlCommand("SELECT * FROM borrow WHERE bookID = @bookID ", Database.connection);
+                cmd2.Parameters.Add(new MySqlParameter("bookID", label26.Text));
+                MySqlDataReader reader1 = cmd2.ExecuteReader();
+                if (reader1.Read())
+                    {
+                        string newstock = textBox21.Text + label25.Text;
+                        
+                        Database.Close();
+                        Database.Open();
+                        MySqlCommand add = new MySqlCommand("update borrow set title = @title, author = @author, category = @category, stock = @stock where bookID = @bookID", Database.connection);
+                        add.Parameters.Add(new MySqlParameter("bookID", label26.Text));
+                        add.Parameters.Add(new MySqlParameter("title", label7.Text));
+                        add.Parameters.Add(new MySqlParameter("author", label8.Text));
+                        add.Parameters.Add(new MySqlParameter("category", label24.Text));
+                        add.Parameters.Add(new MySqlParameter("stock", newstock));
+                        add.ExecuteNonQuery();
+                        Database.Close();
+                        button1_Click(sender, e);
+                        MessageBox.Show("Book already added");
+                        try
+                        {
+                            MySqlDataAdapter sda = new MySqlDataAdapter("SELECT * from borrow", Database.connection);
+                            DataTable dbdataset = new DataTable();
+                            sda.Fill(dbdataset);
+                            dataGridView5.DataSource = dbdataset;
+                            sda.Update(dbdataset);
+                            Database.Close();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+
+                    }
+                    else
+                    {
+
+                    
+                        Database.Open();
+                        MySqlCommand cmd = new MySqlCommand("INSERT INTO borrow VALUES (NULL, @bookID, @title, @author, @category, @stock)", Database.connection);
+                        cmd.Parameters.Add(new MySqlParameter("bookID", label26.Text));
+                        cmd.Parameters.Add(new MySqlParameter("title", label7.Text));
+                        cmd.Parameters.Add(new MySqlParameter("author", label8.Text));
+                        cmd.Parameters.Add(new MySqlParameter("category", label24.Text));
+                        cmd.Parameters.Add(new MySqlParameter("stock", textBox21.Text));
+                        cmd.ExecuteNonQuery();
+                        Database.Close();
+                        button1_Click(sender, e);
+                        MessageBox.Show("Book Added!");
+                        try
+                        {
+                            Database.Open();
+                            MySqlDataAdapter sda = new MySqlDataAdapter(" select * from borrow", Database.connection);
+                            DataTable dbdataset = new DataTable();
+                            sda.Fill(dbdataset);
+                            dataGridView5.DataSource = dbdataset;
+                            sda.Update(dbdataset);
+                            Database.Close();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                Database.Close();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                return;
+            }
+           }
+
+        private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SearchStatus();
+        }
     }
-}
+    }
